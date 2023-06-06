@@ -1,11 +1,14 @@
 import NoteList from "../Components/NoteList"
+import { Note, Tag } from "../Props/Notes_Tags"
 
-
-function Home() {
+type HomeProps ={
+  Notes:Note[]
+  tags:Tag[]
+}
+function Home({Notes,tags}:HomeProps) {
   return (
     <>
-    <div>Home</div>
-    <NoteList/>
+    <NoteList Availabletags={tags} Notes={Notes}/>
     </>
   )
 }
