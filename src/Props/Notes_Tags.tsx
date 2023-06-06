@@ -8,6 +8,7 @@ export type NoteProps = {
     tags:Tag[]
 }
 
+
 export type Tag = {
     id:string,
     label:string,
