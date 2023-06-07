@@ -5,8 +5,8 @@ import { v4 as uuidV4 } from "uuid"
 import { useNavigate } from 'react-router-dom'
 
 type NewNoteprops = {
-    Submitform:(data:NoteProps) => void
-    OnAddtag:(tag:Tag) => void
+   OnUpdateTag:(data:NoteProps) => void
+    OnUpdatetag:(tag:Tag) => void
     Availabletags:Tag[]
 }
 
@@ -14,10 +14,10 @@ type ReactSelectProps ={
     SetSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>
     SelectedTags:Tag[]
     Availabletags:Tag[]
-    OnAddtag:(tag:Tag) =>void
+    OnUpdatetag:(tag:Tag) =>void
 }
 
-const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }: ReactSelectProps) => {
+const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag }: ReactSelectProps) => {
     return (
       <>
         <label className="block mb-2 text-lg font-label font-medium text-gray-900">Tags</label>
@@ -47,7 +47,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }:
     );
   };
   
-  function NewNote({ Submitform, OnAddtag, Availabletags }: NewNoteprops) {
+  function EditNote({ OnUpdateform, OnUpdateTag, Availabletags }: NewNoteprops) {
     const TitleRef = useRef<HTMLTextAreaElement>(null);
     const BodyRef = useRef<HTMLTextAreaElement>(null);
     const navigate = useNavigate();
@@ -55,7 +55,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }:
   
     const handleChange = (e: FormEvent) => {
       e.preventDefault();
-      Submitform({
+      OnUpdateTag({
         title: TitleRef.current!.value,
         body: BodyRef.current!.value,
         tags: SelectedTags,
@@ -83,7 +83,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }:
               <div className="w-full md:w-1/2 mt-4 md:mt-0">
                 <ReactSelect
                   SetSelectedTags={SetSelectedTags}
-                  OnAddtag={OnAddtag}
+                  OnUpdatetag={OnUpdateTag}
                   Availabletags={Availabletags}
                   SelectedTags={SelectedTags}
                 />
@@ -110,4 +110,4 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }:
   }
   
 
-export default NewNote
+export default EditNote
