@@ -4,11 +4,12 @@ import { Note, Tag } from "../Props/Notes_Tags"
 type HomeProps ={
   Notes:Note[]
   tags:Tag[]
+  Deletetag:(id:string) => void
 }
-function Home({Notes,tags}:HomeProps) {
+function Home({Notes,tags,Deletetag}:HomeProps) {
   return (
     <>
-    <NoteList Availabletags={tags} Notes={Notes}/>
+    <NoteList Deletetag={Deletetag} Availabletags={tags} Notes={Notes}/>
     </>
   )
 }

@@ -1,22 +1,25 @@
-import { useNavigate } from "react-router-dom";
+
 import {Note, Tag} from "../Props/Notes_Tags";
 import { useMemo, useState } from "react";
 import CreatableReactSelect from 'react-select/creatable'
 import { Link } from "react-router-dom";
 import NoteCard from "./NoteCard";
+import EditModal from "./EditModal";
 
 type ReactSelectProps ={
   SetSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>
   SelectedTags:Tag[]
   Availabletags:Tag[]
+  
 }
 type NoteListProps ={
   Notes:Note[]
   Availabletags:Tag[]
+  Deletetag:(id:string) => void
 }
 
 
-const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags }: ReactSelectProps) => {
+const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags  }: ReactSelectProps) => {
   return (
     <>
       <label className="block mb-2 text-lg font-label font-medium text-gray-900">Tags</label>
@@ -41,9 +44,8 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags }: ReactSele
   );
 };
 
-function NoteList({ Notes, Availabletags }: NoteListProps) {
+function NoteList({ Notes, Availabletags ,Deletetag}: NoteListProps) {
   const [Title, Settitle] = useState<string>("");
-  const navigate = useNavigate();
   const [SelectedTags, SetSelectedTags] = useState<Tag[]>([]);
   const FilterNotes = useMemo(() => {
     return Notes.filter((note) => {
@@ -66,12 +68,8 @@ function NoteList({ Notes, Availabletags }: NoteListProps) {
             >
               Create
             </Link>
-            <Link
-              to="./new"
-              className="px-4 py-3 hover:bg-gray-300 border border-black font-mono bg-white rounded-lg"
-            >
-              Edit Tags
-            </Link>
+          
+            <EditModal tags={Availabletags} Deletetag={Deletetag}/>
           </div>
         </div>
         <div className="flex flex-col">

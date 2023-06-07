@@ -1,10 +1,19 @@
 import { Link, useNavigate } from "react-router-dom"
 import { LayoutContext } from "../Pages/NoteLayout"
+import { FormEvent } from "react"
 
+type NoteProps ={
+  deletenote:(id:string) => void
+}
 
-const Note = () => {
+const Note = ({deletenote}:NoteProps) => {
     const note = LayoutContext()
     const navigate = useNavigate()
+    const handledelete =(e: FormEvent) =>{
+      e.preventDefault();
+      deletenote(note.id);
+      navigate('..')
+    }
   return (
 <div className="h-screen">
   <div className="w-screen flex justify-between mt-10">
@@ -35,12 +44,9 @@ const Note = () => {
       >
         Edit
       </Link>
-      <Link
-        to="./edit"
-        className="px-2 md:px-6 py-2 md:py-3 font-pixel text-lg hover:bg-red-600 text-white bg-red-500 rounded-lg"
-      >
-        Delete
-      </Link>
+          <button onClick={(e)=>{handledelete(e)}} className="px-2 md:px-6 py-2 md:py-2 font-pixel text-lg hover:bg-red-600 text-white bg-red-500 rounded-lg">
+            Delete
+          </button>
       <Link
         to=".."
         className="px-2 md:px-6 py-2 md:py-3 hover:bg-gray-300 border border-black font-bold font-pixel text-lg bg-white rounded-lg"
