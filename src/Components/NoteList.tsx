@@ -10,16 +10,18 @@ type ReactSelectProps ={
   SetSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>
   SelectedTags:Tag[]
   Availabletags:Tag[]
+
   
 }
 type NoteListProps ={
   Notes:Note[]
   Availabletags:Tag[]
   Deletetag:(id:string) => void
+  
 }
 
 
-const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags  }: ReactSelectProps) => {
+const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags   }: ReactSelectProps) => {
   return (
     <>
       <label className="block mb-2 text-lg font-label font-medium text-gray-900">Tags</label>
@@ -69,7 +71,7 @@ function NoteList({ Notes, Availabletags ,Deletetag}: NoteListProps) {
               Create
             </Link>
           
-            <EditModal tags={Availabletags} Deletetag={Deletetag}/>
+            <EditModal tags={Availabletags}  Deletetag={Deletetag}/>
           </div>
         </div>
         <div className="flex flex-col">

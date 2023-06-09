@@ -2,12 +2,13 @@ import {Navigate, Route,Routes} from 'react-router-dom'
 import Home from './Pages/Home'
 import NewNote from './Pages/NewNote'
 import {UseLocalStorage} from './CustomHooks/UseLocalStorage'
-import { LocalStorageNotes, Note, NoteProps, Tag } from './Props/Notes_Tags'
+import { LocalStorageNotes, NoteProps, Tag } from './Props/Notes_Tags'
 import { useMemo } from 'react'
 import { v4 as uuidV4 } from "uuid"
 import {NoteLayout} from './Pages/NoteLayout'
 
 import EditNote from './Components/EditNote'
+import SelectedNote from './Components/SelectedNote'
 
 
 function App() {
@@ -26,15 +27,15 @@ function App() {
     })
   }
 
-  const OnUpdateTag = (id:string,label:string) => {
-        Tags.map(Tag =>{
-          if (Tag.id ==  id) {
-            return {...Tag,label:label}
-          }else{
-            return Tag
-          }
-        })
-  }
+  // const OnUpdateTag = (id:string,label:string) => {
+  //       Tags.map(Tag =>{
+  //         if (Tag.id ==  id) {
+  //           return {...Tag,label:label}
+  //         }else{
+  //           return Tag
+  //         }
+  //       })
+  // }
 
   const OnUpdateForm = (id:string,{tags,...data}:NoteProps) =>{
     SetNewnote(prevNotes =>{
@@ -75,8 +76,8 @@ function App() {
     <Route path='/new' element={<NewNote Submitform={SubmitForm} OnAddtag={addtag} Availabletags={Tags}/>}/>
     <Route path='*' element={<Navigate to={'/'}/>} />
     <Route path='/:id' element={<NoteLayout notes={NotesAndTag}/>}>
-    <Route index element={<Note deletenote={DeleteNote}/>}/>
-    <Route path='edit' element={<EditNote OnUpdateTag={}/>}/>
+    <Route index element={<SelectedNote deletenote={DeleteNote}/>}/>
+    <Route path='edit' element={<EditNote  Submitform={OnUpdateForm} OnAddtag={addtag} Availabletags={Tags}/>}/>
     </Route>
 
 

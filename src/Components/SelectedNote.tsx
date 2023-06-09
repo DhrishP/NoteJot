@@ -44,7 +44,7 @@ const Note = ({deletenote}:NoteProps) => {
       >
         Edit
       </Link>
-          <button onClick={(e)=>{handledelete(e)}} className="px-2 md:px-6 py-2 md:py-2 font-pixel text-lg hover:bg-red-600 text-white bg-red-500 rounded-lg">
+          <button onClick={(e)=>{handledelete(e)}} className="px-2 md:px-6 py-1 md:py-2 font-pixel text-lg hover:bg-red-600 text-white bg-red-500 rounded-lg">
             Delete
           </button>
       <Link

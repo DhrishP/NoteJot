@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Tag } from "../Props/Notes_Tags";
 
+
 type Editmodalprops ={
     tags:Tag[]
     Deletetag:(id:string) => void
+  
 }
 
 const EditModal = ({tags,Deletetag}:Editmodalprops) => {
@@ -27,7 +29,10 @@ const EditModal = ({tags,Deletetag}:Editmodalprops) => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
           <div className="relative  bg-white rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4 font-pixel ">Edit Tags</h2>
+          <div className="flex flex-row items-center justify-between"><h2 className="text-2xl font-bold mb-4 font-pixel">Edit tags</h2> 
+          {/* <div  className="text-2xl font-bold font-label self-start cursor-pointer mb-6">+</div> */}
+          </div>
+       
             {
                 tags.map((tag)=>{
                     return(

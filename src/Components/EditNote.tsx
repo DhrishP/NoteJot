@@ -3,21 +3,24 @@ import CreatableReactSelect from 'react-select/creatable'
 import { NoteProps, Tag } from '../Props/Notes_Tags'
 import { v4 as uuidV4 } from "uuid"
 import { useNavigate } from 'react-router-dom'
+import { LayoutContext } from '../Pages/NoteLayout'
 
 type NewNoteprops = {
-   OnUpdateTag:(data:NoteProps) => void
-    OnUpdatetag:(tag:Tag) => void
+    Submitform:(id:string,data:NoteProps) => void
+    OnAddtag:(tag:Tag) => void
     Availabletags:Tag[]
-}
+}& Partial<NoteProps>
 
 type ReactSelectProps ={
     SetSelectedTags: React.Dispatch<React.SetStateAction<Tag[]>>
     SelectedTags:Tag[]
     Availabletags:Tag[]
-    OnUpdatetag:(tag:Tag) =>void
+    OnAddtag:(tag:Tag) =>void
 }
 
-const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag }: ReactSelectProps) => {
+const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnAddtag }: ReactSelectProps) => {
+      
+
     return (
       <>
         <label className="block mb-2 text-lg font-label font-medium text-gray-900">Tags</label>
@@ -47,15 +50,18 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag
     );
   };
   
-  function EditNote({ OnUpdateform, OnUpdateTag, Availabletags }: NewNoteprops) {
+  function EditNote({ Submitform, OnAddtag, Availabletags }: NewNoteprops) {
+    const note = LayoutContext()
     const TitleRef = useRef<HTMLTextAreaElement>(null);
     const BodyRef = useRef<HTMLTextAreaElement>(null);
     const navigate = useNavigate();
-    const [SelectedTags, SetSelectedTags] = useState<Tag[]>([]);
+    const [SelectedTags, SetSelectedTags] = useState<Tag[]>(note.tags as []);
+   
   
     const handleChange = (e: FormEvent) => {
       e.preventDefault();
-      OnUpdateTag({
+      Submitform(note.id,{
+        
         title: TitleRef.current!.value,
         body: BodyRef.current!.value,
         tags: SelectedTags,
@@ -72,6 +78,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag
               <div className="w-full md:w-1/2 md:mr-4">
                 <label className="block mb-2 text-lg font-label text-gray-900">Title</label>
                 <textarea
+                defaultValue={note.title}
                   required
                   style={{ resize: "none" }}
                   ref={TitleRef}
@@ -83,7 +90,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag
               <div className="w-full md:w-1/2 mt-4 md:mt-0">
                 <ReactSelect
                   SetSelectedTags={SetSelectedTags}
-                  OnUpdatetag={OnUpdateTag}
+                  OnAddtag={OnAddtag}
                   Availabletags={Availabletags}
                   SelectedTags={SelectedTags}
                 />
@@ -92,6 +99,7 @@ const ReactSelect = ({ SelectedTags, SetSelectedTags, Availabletags, OnUpdatetag
             <div className="mx-4 mt-10">
               <label className="block mb-2 text-lg font-label text-gray-900">Body</label>
               <textarea
+              defaultValue={note.body}
                 required
                 ref={BodyRef}
                 rows={15}
